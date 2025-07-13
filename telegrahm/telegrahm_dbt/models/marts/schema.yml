@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dim_channels
+    columns:
+      - name: channel_name
+        tests:
+          - unique
+          - not_null
+  - name: dim_dates
+    columns:
+      - name: date
+        tests:
+          - unique
+          - not_null
+  - name: fct_messages
+    columns:
+      - name: message_id
+        tests:
+          - unique
+          - not_null
+      - name: channel_name
+        tests:
+          - not_null
+      - name: date
+        tests:
+          - not_null
+
+tests:
+  - name: valid_media_path
+    description: Ensure messages with has_media=true and media_type='photo' have a non-null media_path
+    query: |
+      SELECT *
+      FROM marts.fct_messages
+      WHERE has_media = TRUE
+      AND media_type = 'photo'
+      AND media_path IS NULL
+    expect_rows: 0
