@@ -18,9 +18,16 @@ clean-targets:
 
 models:
   telegrahm_dbt:
+    # Base configuration applied to all models
+    +materialized: view
+    +schema: "telegram_dbt"  # Base schema name
+    
+    # Staging models configuration
     staging:
-      materialized: view
-      schema: staging
+      +materialized: view
+      +schema: "{{ target.schema }}_staging"  # Will become telegram_dbt_staging
+      
+    # Marts models configuration  
     marts:
-      materialized: table
-      schema: marts
+      +materialized: table
+      +schema: "{{ target.schema }}_marts"    # Will become telegram_dbt_marts

@@ -1,5 +1,3 @@
-{{ config(materialized='table', schema='marts') }}
-
 SELECT DISTINCT
     channel_name,
     CASE
@@ -7,4 +5,4 @@ SELECT DISTINCT
         WHEN channel_name = 'lobelia4cosmetics' THEN 'https://t.me/lobelia4cosmetics'
         WHEN channel_name = 'tikvahpharma' THEN 'https://t.me/tikvahpharma'
     END AS channel_url
-FROM staging.stg_telegram_messages
+FROM {{ ref('stg_telegram_messages') }}
