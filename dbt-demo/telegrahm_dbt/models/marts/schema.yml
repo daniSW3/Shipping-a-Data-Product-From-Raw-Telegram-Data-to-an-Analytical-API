@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: fct_messages
+    columns:
+      - name: channel_name
+        tests:
+          - not_null
+      - name: date
+        tests:
+          - not_null
+      - name: message_id
+        tests:
+          - not_null
+          - unique
